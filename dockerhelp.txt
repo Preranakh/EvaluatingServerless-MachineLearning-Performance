@@ -1,0 +1,34 @@
+docker build
+
+go to the directory with the DockerFile. Need to figure out tags
+
+docker build .
+
+see available images
+
+docker images
+
+run docker
+
+detach mode with port forwarding
+docker run -d -p 5000:500 <image_id>
+
+normal
+docker run <image_id>
+
+see running containers
+docker ps
+
+go inside docker terminal
+
+docker exec -it <container_id> bash
+
+
+stop docker
+
+docker stop <container_id>
+
+
+delete docker
+
+docker rmi -f image_id

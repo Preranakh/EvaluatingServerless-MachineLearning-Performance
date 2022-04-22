@@ -52,6 +52,6 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")
 
 # gunicorn --workers 1 --bind 0.0.0.0:5000 app:app
