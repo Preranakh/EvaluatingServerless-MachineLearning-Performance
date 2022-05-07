@@ -14,10 +14,10 @@ if not os.path.isdir("tmp/"):
     os.mkdir("tmp/")
 
 
-@app.route("/healthz", methods=["GET"])
-def health_check():
+@app.route("/", methods=["GET"])
+def root_check():
     logger.info("here!!")
-    return "Welcome to MobileNet Flask App!"
+    return "Welcome to MobileNet Flask App! OS Project 2022."
 
 
 @app.route("/predict", methods=["POST"])

@@ -32,3 +32,8 @@ docker stop <container_id>
 delete docker
 
 docker rmi -f image_id
+
+
+docker tag c3f52e36b3d2 pranjal750/add_root:secondtry
+docker tag pranjal750/add_root:secondtry gcr.io/shining-hydra-347804/pranjal750/add_root:secondtry
+docker push gcr.io/shining-hydra-347804/pranjal750/add_root:secondtry
