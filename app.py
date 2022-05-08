@@ -6,6 +6,7 @@ from loguru import logger
 from flask import Flask, jsonify, request
 
 from classifier import Predictor
+from classifier.util import download_img_from_url
 
 model = Predictor()
 
@@ -22,6 +23,7 @@ def root_check():
 
 @app.route("/predict", methods=["POST"])
 def predict():
+    URL_DOWNLOAD_SUCCESS = False
     content_type = request.headers.get("Content-Type")
     if content_type.startswith("multipart/form-data"):
         x_api_key = request.headers.get("x-api-key")
@@ -29,17 +31,23 @@ def predict():
             return jsonify({"message": "Incorrect credentials"}), 401
         files = request.files
         if not files:
-            return jsonify({"message": "Missing Image in the request"}), 400
+            file_path = download_img_from_url(request.form.get("image"))
+            if file_path == "DOWNLOAD_ERROR":
+                return jsonify({"message": "Missing Image in the request"}), 400
+            URL_DOWNLOAD_SUCCESS = True
         elif not files.get("image"):
             return jsonify({"message": "Missing Image in the request"}), 400
 
-        im = files.get("image")
-        ext = im.filename.split(".")[-1]
-        if ext.lower() not in ["jpg", "png", "jpeg"]:
-            return jsonify({"message": "Unsupported image format"}), 400
-        filename = uuid.uuid4().hex
-        file_path = os.path.join(os.path.dirname(__file__), "tmp", filename + "." + ext)
-        im.save(file_path)
+        if not URL_DOWNLOAD_SUCCESS:
+            im = files.get("image")
+            ext = im.filename.split(".")[-1]
+            if ext.lower() not in ["jpg", "png", "jpeg"]:
+                return jsonify({"message": "Unsupported image format"}), 400
+            filename = uuid.uuid4().hex
+            file_path = os.path.join(
+                os.path.dirname(__file__), "tmp", filename + "." + ext
+            )
+            im.save(file_path)
         try:
             prediction = model.predict(file_path)
         except:
