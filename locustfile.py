@@ -2,7 +2,7 @@ from locust import HttpUser, between, task
 
 
 class WebsiteUser(HttpUser):
-    wait_time = between(3, 5)
+    # wait_time = between(3, 5)
 
     @task(1)
     def index(self):
@@ -11,7 +11,7 @@ class WebsiteUser(HttpUser):
     @task(2)
     def predict(self):
         self.client.post(
-            "predict",
+            "/predict",
             headers={"x-api-key": "1234"},
             data={
                 "image": "https://www.autocar.co.uk/sites/autocar.co.uk/files/1-corvette-stingray-c8-2019-fd-hr-hero-front.jpg"
@@ -22,7 +22,7 @@ class WebsiteUser(HttpUser):
     @task(2)
     def predict_w_img(self):
         self.client.post(
-            "predict",
+            "/predict",
             headers={"x-api-key": "1234"},
             data={},
             files=[
