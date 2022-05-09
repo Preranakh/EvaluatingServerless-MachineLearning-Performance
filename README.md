@@ -119,5 +119,9 @@ Response Sample:
 }
 ```
 
+## Locust load testing result
+https://htmlpreview.github.io/?https://github.com/pranjal1/ML_Deploy/blob/main/results/locust.html
+## Cloud Run analytics
+https://nbviewer.org/github/pranjal1/ML_Deploy/blob/main/results/cloud_run.ipynb
 
 
