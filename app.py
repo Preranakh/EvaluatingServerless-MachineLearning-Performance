@@ -17,15 +17,18 @@ if not os.path.isdir("tmp/"):
 
 @app.route("/", methods=["GET"])
 def root_check():
-    logger.info("here!!")
+    logger.info("Health check!!")
     return "Welcome to MobileNet Flask App! OS Project 2022."
 
 
 @app.route("/predict", methods=["POST"])
 def predict():
+    logger.info("Predict endpoint")
     URL_DOWNLOAD_SUCCESS = False
     content_type = request.headers.get("Content-Type")
-    if content_type.startswith("multipart/form-data"):
+    if content_type.startswith("multipart/form-data") or content_type.startswith(
+        "application/x-www-form-urlencoded"
+    ):
         x_api_key = request.headers.get("x-api-key")
         if not x_api_key == "1234":
             return jsonify({"message": "Incorrect credentials"}), 401
@@ -36,7 +39,7 @@ def predict():
                 return jsonify({"message": "Missing Image in the request"}), 400
             URL_DOWNLOAD_SUCCESS = True
         elif not files.get("image"):
-            return jsonify({"message": "Missing Image in the request"}), 400
+            return jsonify({"message": "Missing image parameter in the request"}), 400
 
         if not URL_DOWNLOAD_SUCCESS:
             im = files.get("image")
@@ -56,7 +59,7 @@ def predict():
             return {"message": "Server error!"}, 500
         return jsonify({"message": "Success", "Prediction": prediction}), 200
     else:
-        return "Content-Type not supported!"
+        return jsonify({"message": "Content-Type not supported!"}), 400
 
 
 if __name__ == "__main__":
