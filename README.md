@@ -1,5 +1,8 @@
 # ML_Deploy
 
+Through this project, we aim to understand microservice architecture, which is an increasingly popular approach to software development. We aim to learn about containerization using Dockers and the different features offered by the Google Cloud Platform. In this project, we will create a machine learning Python Flask application for image classification, containerize it, and deploy the containerized application on the Google Cloud Platform server. We will expose endpoints that the client applications can use to send requests. We will stress test the machine learning application and determine metrics like response latency, cold start time, memory and CPU utilization, and crash frequency. We will also understand the auto-scaling feature offered by cloud-run.
+
+
 ## Steps to deploy in Cloud Run:
 1. Install Google Cloud CLI and authenticate following the link [here](https://cloud.google.com/sdk/gcloud) and [here](https://cloud.google.com/sdk/docs/authorizing).
 2. Build the docker image using the file: ``Dockerfile``
